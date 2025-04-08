@@ -1,0 +1,129 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0 10px; /* Add some padding */
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.toolbar {
+    background-color: #ddd;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.button, .tool-button {
+    padding: 8px 15px;
+    border: 1px solid #bbb;
+    background-color: #eee;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.button:hover, .tool-button:hover {
+    background-color: #d8d8d8;
+}
+
+.button:disabled, .tool-button:disabled {
+    background-color: #f5f5f5;
+    color: #aaa;
+    cursor: not-allowed;
+    border-color: #ddd;
+}
+
+
+.button.primary {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #45a049;
+}
+.button.primary:hover:not(:disabled) {
+    background-color: #45a049;
+}
+.button.primary:disabled {
+     background-color: #a5d6a7;
+     border-color: #9ccc65;
+}
+
+
+.tool-button.active {
+    background-color: #a0a0f0;
+    border-color: #8080d0;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+
+#page-indicator {
+    font-size: 14px;
+    color: #333;
+    margin: 0 5px;
+}
+
+.divider {
+    color: #bbb;
+    margin: 0 5px;
+}
+
+
+#pdf-viewer {
+    /* Width managed by canvas, max-width prevents excessive size */
+    max-width: 95%;
+    margin: 0 auto; /* Center the container */
+    background-color: white;
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    position: relative; /* Crucial for absolute positioning children */
+    margin-bottom: 20px;
+    /* Ensure container has size even before canvas is drawn */
+    min-height: 100px;
+    display: flex; /* Use flex to easily center canvas if needed */
+    justify-content: center;
+    align-items: flex-start; /* Align canvas to top */
+}
+
+#pdf-canvas {
+    display: block; /* Remove extra space below canvas */
+    /* width/height set by JS */
+    background-color: #fff; /* In case PDF is transparent */
+}
+
+#annotation-canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0; /* JS will adjust based on pdf-canvas position */
+    /* width/height set by JS */
+    z-index: 10; /* Must be above pdf-canvas */
+    cursor: default; /* Default cursor, changes based on tool */
+    pointer-events: auto; /* Capture mouse events */
+}
+
+/* Style for the temporary text input */
+#text-input {
+    position: absolute; /* Position relative to pdf-viewer */
+    z-index: 20; /* Above annotation canvas */
+    border: 1px solid #007bff;
+    background-color: rgba(255, 255, 220, 0.9); /* Light yellow */
+    font-size: 14px; /* Match typical annotation text size */
+    padding: 5px;
+    resize: none; /* Disable browser resize handle if desired */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    outline: none;
+    /* Initial size, can be adjusted */
+    width: 150px;
+    height: 40px;
+}

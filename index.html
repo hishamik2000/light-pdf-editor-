@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light PDF Editor</title>
+    <link rel="stylesheet" href="style.css">
+    <!--
+        IMPORTANT: Due to browser security restrictions (CORS) with Web Workers,
+        you MUST run this HTML file from a local web server (like VS Code Live Server,
+        `npx serve`, or `python -m http.server`), not by opening the file directly
+        using a file:/// URL. Otherwise, PDF.js will likely fail to load.
+    -->
+
+    <!-- PDF.js library (ensure version consistency) -->
+    <script src="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.min.js"></script>
+    <script>
+      // Point to the worker script (essential for PDF.js)
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js';
+    </script>
+
+    <!-- pdf-lib library -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+    <!-- download.js (for easy file saving) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
+</head>
+<body>
+    <h1>Light PDF Editor</h1>
+
+    <div class="toolbar">
+        <label for="file-input" class="button">Load PDF</label>
+        <input type="file" id="file-input" accept=".pdf" style="display: none;">
+
+        <button id="prev-page" disabled>Prev Page</button>
+        <span id="page-indicator"><span id="page-num">0</span> / <span id="page-count">0</span></span>
+        <button id="next-page" disabled>Next Page</button>
+
+        <span class="divider">|</span>
+
+        <button class="tool-button" data-tool="text">Add Text</button>
+        <button class="tool-button" data-tool="highlight">Highlight</button>
+        <button class="tool-button" data-tool="image">Add Image</button>
+        <!-- Add more tools: Draw Shape, Rotate Page, Delete Page etc. -->
+
+        <span class="divider">|</span>
+        <button id="save-pdf" class="button primary" disabled>Save PDF</button>
+    </div>
+
+    <!-- Container for centering and positioning canvases -->
+    <div id="pdf-viewer">
+        <!-- Canvas for rendering PDF pages -->
+        <canvas id="pdf-canvas"></canvas>
+        <!-- Transparent overlay canvas for drawing & interaction -->
+        <canvas id="annotation-canvas"></canvas>
+        <!-- Hidden text input, positioned dynamically -->
+        <textarea id="text-input" style="display: none;"></textarea>
+    </div>
+
+     <!-- Hidden input for selecting images -->
+    <input type="file" id="image-input" accept="image/png, image/jpeg" style="display: none;">
+
+
+    <script src="script.js"></script>
+</body>
+</html>
